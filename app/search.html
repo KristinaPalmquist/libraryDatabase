@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/styles.css" />
+        <title>Library | Search</title>
+    </head>
+    <body>
+        <div class="grid-container">
+            <nav>
+                <div id="welcome">
+                    <a href="/" class="course"
+                        ><h1>Backend och databaser</h1></a
+                    >
+                    <p class="student">
+                        Laboration 1 - Kristina Palmquist - JSU22
+                    </p>
+                </div>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/chat">Chat</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+            </nav>
+
+            <main>
+                <div id="Search">
+                    <h1>Find a book title or an author</h1>
+
+                    <div class="input-controller">
+                        <input
+                            type="radio"
+                            id="title"
+                            name="search-for"
+                            value="find_title"
+                        />
+                        <label for="title">Book title</label>
+                        <input
+                            type="radio"
+                            id="author"
+                            name="search-for"
+                            value="find_author"
+                        />
+                        <label for="author">Author</label>
+                    </div>
+                    <div class="input-controller">
+                        <input type="text" id="search-input" />
+                        <button id="find">Find</button>
+                    </div>
+
+                    <div class="message-box"></div>
+                </div>
+            </main>
+
+            <footer>
+                <p>Copyright &copy; Kristina Palmquist 2023</p>
+            </footer>
+        </div>
+    </body>
+</html>

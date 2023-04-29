@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Castoro+Titling&family=Playfair+Display&display=swap');
+
+* {
+    --black: #000000;
+    --white: #ffffff;
+    --blue: #14213d;
+    --yellow: #fca311;
+    --grey: #e5e5e5;
+    --dark-grey: #c0c0c0;
+}
+
+body {
+    box-sizing: border-box;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: var(--grey);
+    
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Castoro Titling', 'Courier New', Courier, monospace;
+}
+
+.grid-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: min-content auto min-content;
+    grid-template-areas: 'nav nav nav' '. main .' 'footer footer footer';
+}
+nav {
+    grid-area: nav;
+}
+main {
+    grid-area: main;
+}
+footer {
+    grid-area: footer;
+}
+
+nav {
+    background-color: var(--blue);
+    color: var(--white);
+    display: flex;
+    padding: 0 2rem;
+}
+nav > ul {
+    display: flex;
+    list-style: none;
+    padding: 0 0 0 20px;
+}
+nav > ul > li {
+    display: flex;
+    padding-left: 1.5rem;
+}
+nav > ul > li > a {
+    color: var(--white);
+    font-size: larger;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.course {
+    color: var(--white);
+    text-decoration: none;
+    text-align: center;
+    margin: auto;
+    padding: 0;
+}
+.student {
+    text-align: center;
+    margin: auto;
+    padding: 0;
+}
+
+main {
+    background-color: var(--white);
+    height: 100%;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#welcome {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Form element styles */
+
+input,
+button {
+    border-width: 2px;
+    border-style: groove;
+    border-color: var(--dark-grey);
+    border-radius: 7px;
+    margin: 5px;
+}
+
+input {
+    height: 30px;
+    width: 350px;
+    padding: 0 10px;
+    text-align: left;
+}
+
+button {
+    height: 33px;
+    width: 108px;
+    background-color: var(--yellow);
+}
+
+input[type='radio'] {
+    width: 21px;
+    height: 20px;
+    margin: 0 14px;
+    accent-color: var(--yellow);
+}
+
+footer {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+/* Styling for chat page */
+#chat {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.message-box {
+    background-color: var(--grey);
+    height: 200px;
+    width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+
+.message {
+    background-color: var(--white);
+    height: min-content;
+    width: 500px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.input-controller {
+    margin: 0px auto;
+    padding: 15px;
+    width: max-content;
+}
+
+/* Styling for Register page */
+fieldset {
+    border-radius: 7px;
+    background-color: var(--grey);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+fieldset > legend > h3 {
+    margin: 5px;
+}
