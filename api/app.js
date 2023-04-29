@@ -14,4 +14,5 @@ app.use('/author', authorRoute)
 const titleRoute = require('./routes/titleRoute')
 app.use('/title', titleRoute)
 
-app.listen(3001, console.log('http://localhost:3001'))
+const PORT = 5421
+app.listen(PORT, console.log('http://localhost:' + PORT))
