@@ -25,6 +25,9 @@ app.get('/search', (req, res) => {
 app.get('/register', (req, res) => {
     res.sendFile(__dirname + '/register.html')
 })
+app.get('/apitest', (req, res) => {
+    res.sendFile(__dirname + '/apitest.html')
+})
 
 const mainRoom = 'Main room'
 const waitingRoom = 'Waiting room'
