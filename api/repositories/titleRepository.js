@@ -7,7 +7,19 @@ async function getAllTitles() {
     let titles = []
     let data = await db_context.selectAllTitles()
     data.forEach((title) => {
-        titles.push(new titleModel(title.title_book))
+        titles.push(
+            new titleModel({
+                titleId: title.title_id,
+                titleBook: title.title_book,
+                publYear: title.publ_year,
+                authorId: title.author_id
+
+                // title_id: title.title_id,
+                // title_book: title.title_book,
+                // publ_year: title.publ_year,
+                // author_id: title.author_id,
+            })
+        )
     })
     return titles
 }
