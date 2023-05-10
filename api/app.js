@@ -8,8 +8,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(express.json())
 
-const authorRoute = require('./routes/authorRoute')
-app.use('/author', authorRoute)
 
 const titleRoute = require('./routes/titleRoute')
 app.use('/title', titleRoute)

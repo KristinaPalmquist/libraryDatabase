@@ -29,5 +29,11 @@ socket.on('server message', (message) => {
 // when receiving event chat message display chat message to the main room
 socket.on('chat message', (output) => {
     const messageBox = document.querySelector('.message-box')
-    messageBox.innerHTML += `<div class="message"><strong>${output.username}:</strong> ${output.message}</div>`
+    let element = document.createElement('div.message')
+    element.innerHTML = `<strong>${output.username}:</strong> ${output.message}`
+    messageBox.prepend(element)
+    messageBox.prepend(document.createElement('br'))
+
+    // const messageBox = document.querySelector('.message-box')
+    // messageBox.innerHTML += `<div class="message"><strong>${output.username}:</strong> ${output.message}</div>`
 })

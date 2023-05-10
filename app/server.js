@@ -1,14 +1,18 @@
 const express = require('express')
 const http = require('http')
+
 // create Server class
 const { Server } = require('socket.io')
 
 // create express app
 const app = express()
+
 // create express server
 const server = http.createServer(app)
+
 // create object of Server class to to execute chat related functions
 const io = new Server(server)
+
 // use middleware for static files in public folder
 app.use(express.static('public'))
 
@@ -54,17 +58,13 @@ io.on('connection', (socket) => {
     }
     // call io through the built in event disconnect
     socket.on('disconnect', () => {
-        console.log('A user disconnected.')
         peopleInMainRoom--
+        console.log('A user disconnected.')
         console.log('People in ' + mainRoom + ': ' + peopleInMainRoom)
     })
     // send chat message to the main room
     socket.on('chat message', (message) => {
         io.to(mainRoom).emit('chat message', message)
-    })
-    // send chat message to the waiting room
-    socket.on('chat message', (message) => {
-        io.to(waitingRoom).emit('chat message', message)
     })
 })
 

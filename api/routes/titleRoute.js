@@ -1,19 +1,39 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/titleController');
+const express = require('express')
+const router = express.Router()
+const controller = require('../controllers/titleController')
 
-router.get("/all", async (req, res) => {
+router.get('/all', async (req, res) => {
     await controller.get(req, res)
-});
+})
 
-router.post("/create", async (req, res) => {
-
+router.post('/add', async (req, res) => {
     await controller.add(req, res)
-});
+    res.sendStatus(200)
+})
 
-router.get("/delete", async (req, res) => {
+router.put('/edit', async (req, res) => {
+    await controller.edit(req, res)
+    res.sendStatus(200)
+})
 
+router.put('/loan', async (req, res) => {
+    await controller.loan(req, res)
+    res.sendStatus(200)
+})
+
+router.delete('/remove', async (req, res) => {
     await controller.remove(req, res)
-});
+    res.sendStatus(200)
+})
 
-module.exports = router;
+router.get('/searchTitle', async (req, res) => {
+    console.log(req.query.keyword)
+    await controller.searchTitle(req, res)
+})
+
+router.get('/searchAuthor', async (req, res) => {
+    console.log(req.query.keyword)
+    await controller.searchAuthor(req, res)
+})
+
+module.exports = router
