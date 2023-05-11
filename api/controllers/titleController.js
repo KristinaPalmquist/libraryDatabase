@@ -1,5 +1,4 @@
-// Accesses database through model,
-// serves response and functionality to the view
+// Accesses database through model, serves response and functionality to the view
 const {
     getAllTitles,
     addTitle,
@@ -12,7 +11,6 @@ const {
 
 async function get(req, res) {
     let data = await getAllTitles()
-    console.log(data)
     return res.json(data)
 }
 

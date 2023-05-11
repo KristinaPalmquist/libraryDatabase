@@ -27,12 +27,10 @@ router.delete('/remove', async (req, res) => {
 })
 
 router.get('/searchTitle', async (req, res) => {
-    console.log(req.query.keyword)
     await controller.searchTitle(req, res)
 })
 
 router.get('/searchAuthor', async (req, res) => {
-    console.log(req.query.keyword)
     await controller.searchAuthor(req, res)
 })
 

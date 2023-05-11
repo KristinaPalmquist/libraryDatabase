@@ -1,5 +1,5 @@
 // creates abstraction layer between data access and business logic layer of application
-// wites method for CRUD to use in controller instead of having data access code in controller
+// writes method for CRUD to use in controller instead of having data access code in controller
 const titleModel = require('../models/titleModel')
 const db_context = require('../db_context')
 
@@ -20,7 +20,6 @@ async function getAllTitles() {
                 loanedQuantity: title.loaned_quantity
             })
         )
-        console.log(title.genre_name)
     })
     return titles
 }

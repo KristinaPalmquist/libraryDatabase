@@ -1,10 +1,10 @@
 const pgp = require('pg-promise')()
 const db = pgp('postgres://postgres:Hipp0Hast74.@localhost:5432/Labb3-Library')
 
-// const { getTitles, getAuthors, addTitle } = require('./queries')
-
 async function selectAllTitles() {
-    let titles = await db.many('SELECT * FROM title INNER JOIN genre ON title.genre_id = genre.genre_id ORDER BY title_id')
+    let titles = await db.many(
+        'SELECT * FROM title INNER JOIN genre ON title.genre_id = genre.genre_id ORDER BY title_id'
+    )
     return titles
 }
 
@@ -28,23 +28,13 @@ async function insertTitle(titleBook, publYear, authorName, genre) {
     )
 }
 
-async function updateTitle(
-    titleId,
-    titleBook,
-    publYear,
-    authorName,
-    genre
-) {
+async function updateTitle(titleId, titleBook, publYear, authorName, genre) {
     db.none(
         `UPDATE title SET title_book = '${titleBook}', publ_year = ${publYear}, author_name = '${authorName}', genre = '${genre}' WHERE title_id = ${titleId}`
     )
 }
 
-async function loanTitle(
-    titleId,
-    availableQuantity,
-    loanedQuantity
-) {
+async function loanTitle(titleId, availableQuantity, loanedQuantity) {
     db.none(
         `UPDATE title SET available_quantity = '${availableQuantity}', loaned_quantity = ${loanedQuantity} WHERE title_id = ${titleId}`
     )
