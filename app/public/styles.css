@@ -176,29 +176,32 @@ th {
 
 .message-box {
     background-color: var(--grey);
-    height: 200px;
+    min-height: 200px;
+    height: min-content;
     width: 600px;
     margin: 21px auto;
     padding: 10px;
-    overflow-y: scroll;
     border-radius: 10px;
+    align-content: center;
+    align-items: center;
 }
 
 .message {
     background-color: var(--white);
     height: min-content;
     width: 500px;
-    margin: 10px;
+    margin: 10px auto;
     padding: 10px;
     border-radius: 10px;
-    text-align: left;
 }
 
-/* .input-controller {
-    margin: 0px auto;
-    padding: 15px;
-    width: max-content;
-} */
+.server-message {
+    border: 1px solid var(--red);
+}
+
+.chat-message {
+    border: 1px solid var(--yellow);
+}
 
 /* Styling for Register page */
 fieldset {
@@ -230,9 +233,21 @@ input#author {
     text-align: center;
 }
 
-.message-box > ul > li > a:hover {
+#availability > tr > td > a:hover {
     font-weight: bold;
     background-color: var(--yellow);
+}
+
+.show-results {
+    width: 150px;
+}
+
+.result-active {
+    display: block;
+}
+
+.result-inactive {
+    display: none;
 }
 
 .update-active {
@@ -278,5 +293,9 @@ input#author {
 }
 
 #availability {
+    width: 600px;
+}
+
+#showAvailability {
     width: 372px;
 }

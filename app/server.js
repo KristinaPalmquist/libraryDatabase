@@ -44,7 +44,10 @@ io.on('connection', (socket) => {
     if (peopleInMainRoom <= 2) {
         socket.join(mainRoom)
         // send welcome message to display in the chat
-        socket.emit('server message', 'Welcome to the chat!')
+        socket.emit(
+            'server message',
+            'Welcome to the chat! How can we help you?'
+        )
         console.log('People in ' + mainRoom + ': ' + peopleInMainRoom)
     }
     // excess visitors will be put into the waiting room

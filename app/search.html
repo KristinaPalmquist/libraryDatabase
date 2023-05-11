@@ -21,8 +21,8 @@
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/chat">Chat</a></li>
-                    <li><a href="/search">Search</a></li>
                     <li><a href="/register">Register</a></li>
+                    <li><a href="/search">Search</a></li>
                 </ul>
             </nav>
 
@@ -52,15 +52,16 @@
                                 <label for="author">Author</label>
                             </div>
                         </div>
-                        <div class="input-controller">
+                        <div class="input-field">
                             <input type="text" id="keyword" />
                             <button id="find">Find</button>
                         </div>
 
-                        <div class="message-box"></div>
+                        <div class="results"></div>
                     </div>
 
                     <div class="update-inactive">
+                        <h1>Loan, update or delete a book</h1>
                         <form action="">
                             <input type="hidden" id="titleId" name="titleId" />
                             <br />
@@ -94,7 +95,7 @@
                             <input type="text" id="genre" name="genre" />
                             <br />
 
-                            <table id="availability">
+                            <table id="showAvailability">
                                 <tr>
                                     <th>Total quantity:</th>
                                     <th>Available quantity:</th>
@@ -170,14 +171,15 @@
             }
 
             btnFind.addEventListener('click', () => {
+                console.log('button clicked')
                 if (findTitle.checked) {
                     printTitles()
                 } else if (findAuthor.checked) {
                     printAuthors()
                 } else {
-                    let messageBox = document.querySelector('div.message-box')
+                    let results = document.querySelector('div.results')
                     // inform the user that a choice is needed
-                    messageBox.innerHTML =
+                    results.innerHTML =
                         '<strong>Please choose either Book title or Author!</strong>'
                 }
             })
@@ -243,43 +245,37 @@
                 // call function to get search result
                 let data = await getTitlesByKeyword()
 
-                let messageBox = document.querySelector('div.message-box')
-                // clear previous search results
-                messageBox.innerHTML = ''
-                let ul = document.createElement('ul')
-                messageBox.appendChild(ul)
-                ul.innerHTML = ''
+                let results = document.querySelector('div.results')
 
+                results.innerHTML = `<table id="availability">
+                                <tr>
+                                    <th>Book Title</th>
+                                    <th>Author</th>
+                                    <th>Available quantity:</th>
+                                    <th>Loaned quantity:</th>
+                                </tr>
+                            </table>`
+
+                let availability = document.querySelector('#availability')
                 // print data
-                for (const title of data) {
-                    // create one list item with a element per book and print the book title in it
-                    let li = document.createElement('li')
-                    let a = document.createElement('a')
-                    // console.log('titleBook: ' + title.title.titleBook)
-                    a.id = title.title.titleId
-                    a.innerText = title.title.titleBook
-                    a.addEventListener('click', () => {
-                        ul.innerHTML = ''
-                        // console.log(title.title.titleId)
-                        // console.log(title.title.genre)
-                        // console.log(title.title.totalQuantity)
-                        // console.log(title.title.availableQuantity)
-                        // console.log(title.title.loanedQuantity)
-                        setCurrentTitle(
-                            title.title.titleId,
-                            title.title.titleBook,
-                            title.title.publYear,
-                            title.title.authorName,
-                            title.title.genre,
-                            title.title.totalQuantity,
-                            title.title.availableQuantity,
-                            title.title.loanedQuantity
-                        )
-                        displayUpdate()
-                    })
-                    li.appendChild(a)
-                    ul.appendChild(li)
+                for (const author of data) {
+                    let trResult = document.createElement('tr')
+                    trResult.id = 'show-result' + author.title.titleId
+                    trResult.innerHTML += `
+
+                                    <td class="show-title" id="title-${author.title.titleId}">
+                                       <a id = id${author.title.titleId}>${author.title.titleBook}</a>
+                                        </td>
+                                    <td class="show-author" id="author-${author.title.titleId}">
+                                        ${author.title.authorName}</td>
+                                    <td class="show-available" id="available-${author.title.titleId}">
+                                        ${author.title.availableQuantity}/${author.title.totalQuantity}</td>
+                                    <td class="show-loaned" id="loaned-${author.title.loanedQuantity}">
+                                        ${author.title.loanedQuantity}/${author.title.totalQuantity}</td>
+                                `
+                    availability.appendChild(trResult)
                 }
+                addListener(data)
             }
 
             async function getTitlesByKeyword() {
@@ -293,15 +289,12 @@
                         }),
                     options
                 )
-                    // logga ev. fel
+                    // log any errors
                     .catch((error) => {
                         console.error(error)
                     })
-                // gör om svaret till json
+                // make response into json
                 let data = await response.json()
-                // console.log("getTitlesByKeyword data: ")
-                // console.log(data)
-                // returnera data
                 return data
             }
 
@@ -309,39 +302,42 @@
                 // call function to get search result
                 let data = await getAuthorsByKeyword()
 
-                let messageBox = document.querySelector('div.message-box')
                 // clear previous search results
-                messageBox.innerHTML = ''
-                let ul = document.createElement('ul')
-                messageBox.appendChild(ul)
-                ul.innerHTML = ''
+                // availability.innerHTML = ''
+
+                let results = document.querySelector('div.results')
+
+                results.innerHTML = `<table id="availability">
+                                <tr>
+                                    <th>Book Title</th>
+                                    <th>Author</th>
+                                    <th>Available quantity:</th>
+                                    <th>Loaned quantity:</th>
+                                </tr>
+                            </table>`
+
+                let availability = document.querySelector('#availability')
                 // print data
                 for (const author of data) {
-                    let li = document.createElement('li')
-                    let a = document.createElement('a')
-                    // console.log('authorName: ' + author.title.authorName)
-                    a.id = author.title.titleId
-                    a.innerText = author.title.authorName
-                    a.addEventListener('click', () => {
-                        ul.innerHTML = ''
-                        // console.log("author object: ")
-                        // console.log(author)
-                        setCurrentTitle(
-                            author.title.titleId,
-                            author.title.titleBook,
-                            author.title.publYear,
-                            author.title.authorName,
-                            author.title.genre,
-                            author.title.totalQuantity,
-                            author.title.availableQuantity,
-                            author.title.loanedQuantity
-                        )
-                        displayUpdate()
-                    })
-                    li.appendChild(a)
-                    ul.appendChild(li)
+                    let trResult = document.createElement('tr')
+                    trResult.id = 'show-result' + author.title.titleId
+                    trResult.innerHTML += `
+
+                                    <td class="show-title" id="title-${author.title.titleId}">
+                                       <a id = id${author.title.titleId}>${author.title.titleBook}</a>
+                                        </td>
+                                    <td class="show-author" id="author-${author.title.titleId}">
+                                        ${author.title.authorName}</td>
+                                    <td class="show-available" id="available-${author.title.titleId}">
+                                        ${author.title.availableQuantity}/${author.title.totalQuantity}</td>
+                                    <td class="show-loaned" id="loaned-${author.title.loanedQuantity}">
+                                        ${author.title.loanedQuantity}/${author.title.totalQuantity}</td>
+                                `
+                    availability.appendChild(trResult)
                 }
+                addListener(data)
             }
+
             async function getAuthorsByKeyword() {
                 // get keyword from input field
                 let keyword = document.querySelector('#keyword').value
@@ -353,15 +349,12 @@
                         }),
                     options
                 )
-                    // logga ev. fel
+                    // log any errors
                     .catch((error) => {
                         console.error(error)
                     })
-                // gör om svaret till json
+                // make response into json
                 let data = await response.json()
-                // console.log("getAuthorsByKeyword data: ")
-                // console.log(data)
-                // returnera data
                 return data
             }
 
@@ -379,6 +372,7 @@
                 document.querySelector('#titleBook').value = titleBook
                 document.querySelector('#publYear').value = publYear
                 document.querySelector('#authorName').value = authorName
+                console.log(authorName)
                 document.querySelector('#genre').value = genre
                 document.querySelector('#totalQuantity').innerHTML =
                     totalQuantity
@@ -386,6 +380,30 @@
                     availableQuantity
                 document.querySelector('#loanedQuantity').innerHTML =
                     loanedQuantity
+            }
+
+            function addListener(data) {
+                console.log(data)
+                // add click event function to every book title
+                for (const title of data) {
+                    console.log(`id${title.title.titleId}`)
+
+                    let a = document.getElementById(`id${title.title.titleId}`)
+                    console.log(a)
+                    a.addEventListener('click', () => {
+                        setCurrentTitle(
+                            title.title.titleId,
+                            title.title.titleBook,
+                            title.title.publYear,
+                            title.title.authorName,
+                            title.title.genre,
+                            title.title.totalQuantity,
+                            title.title.availableQuantity,
+                            title.title.loanedQuantity
+                        )
+                        displayUpdate()
+                    })
+                }
             }
 
             function displayUpdate() {
