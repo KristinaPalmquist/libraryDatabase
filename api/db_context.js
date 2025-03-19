@@ -1,16 +1,16 @@
 const pgp = require('pg-promise')()
-const db = pgp('postgres://postgres:Hipp0Hast74.@localhost:5432/Labb3-Library')
+const db = pgp('postgres://postgres:postgres@localhost:5432/library')
 
 async function selectAllTitles() {
     let titles = await db.many(
-        'SELECT * FROM title INNER JOIN genre ON title.genre_id = genre.genre_id ORDER BY title_id'
+        'SELECT * FROM title INNER JOIN genre ON title.genre_id = genre.id ORDER BY title.id'
     )
     return titles
 }
 
 async function selectTitleByKeyword(keyword) {
     let data = await db.any(
-        `SELECT * FROM title WHERE (LOWER(title_book) LIKE LOWER('%${keyword}%'))`
+        `SELECT * FROM title WHERE (LOWER(name) LIKE LOWER('%${keyword}%'))`
     )
     return data
 }
@@ -24,19 +24,19 @@ async function selectAuthorByKeyword(keyword) {
 
 async function insertTitle(titleBook, publYear, authorName, genre) {
     db.none(
-        `INSERT INTO title (title_book, publ_year, author_name, genre, total_quantity, available_quantity, loaned_quantity) VALUES('${titleBook}', ${publYear}, '${authorName}', '${genre}', 5, 5, 0)`
+        `INSERT INTO title (name, published_year, author_name, genre, total_quantity, available_quantity, loaned_quantity) VALUES('${titleBook}', ${publYear}, '${authorName}', '${genre}', 5, 5, 0)`
     )
 }
 
 async function updateTitle(titleId, titleBook, publYear, authorName, genre) {
     db.none(
-        `UPDATE title SET title_book = '${titleBook}', publ_year = ${publYear}, author_name = '${authorName}', genre = '${genre}' WHERE title_id = ${titleId}`
+        `UPDATE title SET name = '${titleBook}', published_year = ${publYear}, author_name = '${authorName}', genre = '${genre}' WHERE title.id = ${titleId}`
     )
 }
 
 async function loanTitle(titleId, availableQuantity, loanedQuantity) {
     db.none(
-        `UPDATE title SET available_quantity = '${availableQuantity}', loaned_quantity = ${loanedQuantity} WHERE title_id = ${titleId}`
+        `UPDATE title SET available_quantity = '${availableQuantity}', loaned_quantity = ${loanedQuantity} WHERE title.id = ${titleId}`
     )
 }
 
