@@ -1,7 +1,6 @@
+import database_address from ".env";
 const pgp = require("pg-promise")();
-const db = pgp(
-  "postgres://postgres:postgres@localhost:5432/library"
-);
+const db = pgp(database_address);
 
 async function selectAllTitles() {
   let titles = await db.many(

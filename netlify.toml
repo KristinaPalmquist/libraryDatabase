@@ -1,0 +1,12 @@
+[build]
+  publish = "app"
+  command = "echo 'No build needed'"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  command = "cd app && node server.js"
+  port = 5174
