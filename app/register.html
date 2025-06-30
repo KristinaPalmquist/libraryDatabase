@@ -1,107 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/styles.css" />
-        <title>Library | Register</title>
-    </head>
-    <body>
-        <div class="grid-container">
-            <nav>
-                <div id="welcome">
-                    <a href="/" class="course"
-                        ><h1>Backend och databaser</h1></a
-                    >
-                    <p class="student">
-                        Laboration 1 - Kristina Palmquist - JSU22
-                    </p>
-                </div>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/chat">Chat</a></li>
-                    <li><a href="/register">Register</a></li>
-                    <li><a href="/search">Search</a></li>
-                </ul>
-            </nav>
-
-            <main>
-                <div id="register" class="content">
-                    <h1>Register a new book</h1>
-                    <div class="registered"></div>
-                    <form action="">
-                        <fieldset>
-                            <legend><h3>Book</h3></legend>
-                            <input
-                                type="text"
-                                placeholder="Title"
-                                name="titleBook"
-                                id="titleBook"
-                                autofocus
-                            />
-                        </fieldset>
-                        <fieldset>
-                            <legend><h3>Year</h3></legend>
-                            <input
-                                type="text"
-                                placeholder="Published Year"
-                                name="publYear"
-                                id="publYear"
-                            />
-                        </fieldset>
-                        <fieldset>
-                            <legend><h3>Author</h3></legend>
-                            <input
-                                type="text"
-                                placeholder="Name"
-                                name="authorName"
-                                id="authorName"
-                            />
-                        </fieldset>
-                        <fieldset>
-                            <legend><h3>Genre</h3></legend>
-                            <input
-                                type="text"
-                                placeholder="Genre"
-                                name="genre"
-                                id="genre"
-                            />
-                        </fieldset>
-                        <button type="submit" id="btnSave">Save</button>
-                    </form>
-                </div>
-            </main>
-
-            <footer>
-                <p>Copyright &copy; Kristina Palmquist 2023</p>
-            </footer>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Library | Register</title>
+  </head>
+  <body>
+    <div class="grid-container">
+      <nav>
+        <div id="welcome">
+          <a href="/" class="course"
+            ><h1>Backend och databaser</h1></a
+          >
+          <p class="student">
+            Laboration 1 - Kristina Palmquist - JSU22
+          </p>
         </div>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/register">Register</a></li>
+          <li><a href="/search">Search</a></li>
+          <li><a href="/chat">Chat</a></li>
+        </ul>
+      </nav>
 
-        <script>
-            var btnSave = document.querySelector('#btnSave')
-            var titleBook = document.querySelector('#titleBook')
-            var publYear = document.querySelector('#publYear')
-            var authorName = document.querySelector('#authorName')
-            var genre = document.querySelector('#genre')
+      <main>
+        <div id="register" class="content">
+          <h1>Register a new book</h1>
+          <div class="registered"></div>
+          <form action="">
+            <fieldset>
+              <legend><h3>Book</h3></legend>
+              <input
+                type="text"
+                placeholder="Title"
+                name="titleBook"
+                id="titleBook"
+                autofocus
+              />
+            </fieldset>
+            <fieldset>
+              <legend><h3>Year</h3></legend>
+              <input
+                type="text"
+                placeholder="Published Year"
+                name="publYear"
+                id="publYear"
+              />
+            </fieldset>
+            <fieldset>
+              <legend><h3>Author</h3></legend>
+              <input
+                type="text"
+                placeholder="Name"
+                name="authorName"
+                id="authorName"
+              />
+            </fieldset>
+            <fieldset>
+              <legend><h3>Genre</h3></legend>
+              <input
+                type="text"
+                placeholder="Genre"
+                name="genre"
+                id="genre"
+              />
+            </fieldset>
+            <button type="submit" id="btnSave">Save</button>
+          </form>
+        </div>
+      </main>
 
-            btnSave.addEventListener('click', () => {
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        titleBook: titleBook.value,
-                        publYear: publYear.value,
-                        authorName: authorName.value,
-                        genre: genre.value
-                    })
-                }
-                fetch('http://localhost:5421/title/add', options)
-                    .then((response) => console.log(response))
-                    .catch((error) => console.error(error))
-            })
-        </script>
-    </body>
+      <footer>
+        <p>Copyright &copy; Kristina Palmquist 2023</p>
+      </footer>
+    </div>
+
+    <script>
+      var btnSave = document.querySelector("#btnSave");
+      var titleBook = document.querySelector("#titleBook");
+      var publYear = document.querySelector("#publYear");
+      var authorName =
+        document.querySelector("#authorName");
+      var genre = document.querySelector("#genre");
+      var form = document.querySelector("form");
+      var registeredDiv =
+        document.querySelector(".registered");
+
+      btnSave.addEventListener("click", async (e) => {
+        e.preventDefault(); // Prevent form submission/page refresh
+
+        // Validate required fields
+        if (
+          !titleBook.value ||
+          !publYear.value ||
+          !authorName.value ||
+          !genre.value
+        ) {
+          registeredDiv.innerHTML =
+            '<p style="color: red;">All fields are required!</p>';
+          return;
+        }
+
+        // Show loading message
+        registeredDiv.innerHTML =
+          '<p style="color: blue;">Adding book...</p>';
+
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            titleBook: titleBook.value,
+            publYear: parseInt(publYear.value),
+            authorName: authorName.value,
+            genre: genre.value,
+          }),
+        };
+
+        try {
+          const response = await fetch(
+            "http://localhost:5421/title/add",
+            options
+          );
+
+          if (response.ok) {
+            registeredDiv.innerHTML =
+              '<p style="color: green;">Book successfully added!</p>';
+            // Clear the form
+            form.reset();
+            // Focus back on first field
+            titleBook.focus();
+          } else {
+            registeredDiv.innerHTML =
+              '<p style="color: red;">Error adding book. Please try again.</p>';
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          registeredDiv.innerHTML =
+            '<p style="color: red;">Network error. Please check your connection.</p>';
+        }
+      });
+    </script>
+  </body>
 </html>
